@@ -1,0 +1,35 @@
+[
+  {
+    "name": "start",
+    "description": "Connect this phone to a Patchline app. Call when the user sends 'start' followed by a 6-digit code (e.g. 'start 482913'). Pass only the digits.",
+    "inputSchema": {
+      "type": "object",
+      "properties": { "code": { "type": "string", "description": "The 6-digit code from the Patchline website" } },
+      "required": ["code"]
+    }
+  },
+  {
+    "name": "list_incidents",
+    "description": "List the user's recent Patchline incidents (things that broke in their app). Use for 'what's broken?', 'status', 'anything wrong?', 'list'.",
+    "inputSchema": {
+      "type": "object",
+      "properties": { "status": { "type": "string", "enum": ["open", "all"], "description": "open (default) or all" } }
+    }
+  },
+  {
+    "name": "get_incident",
+    "description": "Show details of one incident: error, where it happened, how often. Use for 'details', 'more', 'what happened?', or '#12'. Omit id for the latest open incident.",
+    "inputSchema": {
+      "type": "object",
+      "properties": { "id": { "type": "integer", "description": "Incident number, e.g. 12 for #12" } }
+    }
+  },
+  {
+    "name": "ignore",
+    "description": "Mute an incident so Patchline never texts about this error again. Use for 'ignore', 'mute', 'stop telling me about this'. Omit id for the latest open incident.",
+    "inputSchema": {
+      "type": "object",
+      "properties": { "id": { "type": "integer", "description": "Incident number" } }
+    }
+  }
+]

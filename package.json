@@ -1,0 +1,33 @@
+{
+  "name": "patchline",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.9"
+  },
+  "scripts": {
+    "dev": "tsx watch --env-file-if-exists=.env src/server.ts",
+    "start": "node --env-file-if-exists=.env dist/server.js",
+    "build": "tsup src/server.ts --format esm --target node22 --clean",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "event": "tsx --env-file-if-exists=.env scripts/send-test-event.ts",
+    "connect": "tsx --env-file-if-exists=.env scripts/connect.ts",
+    "keiki:tools": "tsx --env-file-if-exists=.env scripts/register-tools.ts",
+    "keiki:notice": "tsx --env-file-if-exists=.env scripts/spike-keiki.ts"
+  },
+  "dependencies": {
+    "@hono/node-server": "2.1.6",
+    "@libsql/client": "0.18.0",
+    "hono": "4.13.16",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6",
+    "tsup": "9.0.0",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2",
+    "vitest": "5.0.5"
+  }
+}

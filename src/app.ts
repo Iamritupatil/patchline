@@ -1,0 +1,36 @@
+import { Hono } from 'hono'
+import { api } from './api.js'
+import { config } from './config.js'
+import { safeEqual } from './crypto.js'
+import { ingest } from './ingest/route.js'
+import { keikiTools } from './keiki/tools.js'
+import { errMsg, log } from './log.js'
+import { skill } from './skill.js'
+
+export const app = new Hono()
+
+app.get('/health', (c) => c.json({ ok: true }))
+app.route('/ingest', ingest)
+app.route('/keiki/tools', keikiTools)
+app.route('/api', api)
+app.route('/skill', skill)
+
+// Spike: does Maritime keep the process running after the HTTP response? Watch `maritime logs -f`.
+app.post('/admin/spike/background', (c) => {
+  const token = c.req.header('authorization')?.replace(/^Bearer\s+/i, '') ?? ''
+  if (!config.ADMIN_TOKEN || !safeEqual(token, config.ADMIN_TOKEN)) return c.json({ error: 'unauthorized' }, 401)
+  const seconds = Math.min(Number(c.req.query('seconds') ?? 180), 600)
+  const started = Date.now()
+  const timer = setInterval(() => {
+    const elapsed = Math.round((Date.now() - started) / 1000)
+    log.info('spike heartbeat', { elapsed })
+    if (elapsed >= seconds) clearInterval(timer)
+  }, 15_000)
+  return c.json({ ok: true, seconds })
+})
+
+app.notFound((c) => c.json({ error: 'not_found' }, 404))
+app.onError((err, c) => {
+  log.error('unhandled', { path: c.req.path, err: errMsg(err) })
+  return c.json({ error: 'internal' }, 500)
+})
