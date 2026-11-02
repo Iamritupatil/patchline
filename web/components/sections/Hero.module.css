@@ -1,0 +1,141 @@
+/* "Hero" (B5_U9VCRp) */
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.contentContainer {
+  position: relative;
+  flex: 1 0 0;
+  min-width: 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+  padding: 150px 40px 80px;
+  background: var(--page-bg);
+}
+
+.container {
+  position: relative;
+  flex: 1 0 0;
+  min-width: 0;
+  max-width: 1400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+}
+
+.textButtonUi {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  overflow: hidden;
+}
+
+.textButton {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  overflow: hidden;
+}
+
+.headingBody {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.heading {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  max-width: 600px;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.body {
+  flex: none;
+  max-width: 500px;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.buttonContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.bg {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+  padding: 100px;
+  border-radius: 24px;
+  background: url(/images/7hinuK1ca5NnE0jxQx6Xp0Rgc.png) center / cover no-repeat;
+}
+
+@media (max-width: 1199.98px) {
+  .contentContainer {
+    max-width: 1000px;
+    padding: 150px 40px 0;
+  }
+  .container {
+    max-width: 1000px;
+    border-radius: 32px;
+  }
+}
+
+@media (max-width: 809.98px) {
+  .contentContainer {
+    max-width: 500px;
+    padding: 150px 16px 0;
+  }
+  .container {
+    max-width: 500px;
+    border-radius: 24px;
+  }
+  .textButtonUi {
+    gap: 40px;
+  }
+  .heading {
+    width: 100%;
+  }
+  .bg {
+    padding: 24px 16px;
+  }
+}

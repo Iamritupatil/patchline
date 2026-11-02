@@ -1,0 +1,46 @@
+.button {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 1000px;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: background-color 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+.small {
+  padding: 6px 12px;
+}
+
+.icon {
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+
+.primary {
+  background: var(--primary);
+  color: var(--white);
+}
+.primary:hover {
+  background: var(--primary-dark);
+}
+
+.primaryLight {
+  background: var(--secondary);
+  color: var(--white);
+}
+.primaryLight:hover {
+  background: var(--secondary-dark);
+}
+
+.secondary {
+  border: 1px solid var(--dark-20);
+  color: var(--dark);
+}
+.secondary :global(.t-button) {
+  color: var(--dark);
+}

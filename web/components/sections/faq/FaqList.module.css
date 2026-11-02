@@ -1,0 +1,111 @@
+/* "FAQs card container" (dGKghXMEe) */
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 600px;
+  overflow: hidden;
+}
+
+/* "FAQ card" (eWWSXuZM8) */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  align-self: stretch;
+  overflow: hidden;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.outerContainer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  flex: 1 0 0;
+  min-width: 0;
+  margin: 0;
+  padding: 16px 20px;
+  border: 0;
+  border-radius: 16px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+/* Framer borders are drawn on top and take no layout space. */
+.outerContainer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--dark-10);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.textContent {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  flex: 1 0 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.question {
+  position: relative;
+  display: block;
+  align-self: stretch;
+  text-align: start;
+}
+
+.answerWrap {
+  position: relative;
+  display: block;
+  align-self: stretch;
+  overflow: hidden;
+}
+
+/* padding-top = the 4px stack gap, present only while the answer is shown */
+.answer {
+  display: block;
+  padding-top: 4px;
+  text-align: start;
+}
+
+.iconContainer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+}
+
+.whiteOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: var(--white);
+  pointer-events: none;
+}

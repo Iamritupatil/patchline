@@ -1,0 +1,8 @@
+node_modules
+.next
+out
+next-env.d.ts
+*.tsbuildinfo
+# Licensed font files are added locally, never committed
+public/fonts/*
+!public/fonts/README.md

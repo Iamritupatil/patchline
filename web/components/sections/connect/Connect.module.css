@@ -1,0 +1,236 @@
+.steps {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  width: 100%;
+}
+
+/* Same surface as the "On your phone" step cards: white, Dark/10% border, 24px radius. */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px;
+  background: var(--white);
+  border: 1px solid var(--dark-10);
+  border-radius: 24px;
+  min-width: 0;
+}
+
+.cardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.step {
+  color: var(--primary);
+}
+
+.phoneStep {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.qr {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 196px;
+  height: 196px;
+  padding: 8px;
+  border: 1px solid var(--dark-10);
+  border-radius: 16px;
+  background: var(--white);
+}
+
+.qr img {
+  width: 180px;
+  height: 180px;
+  image-rendering: pixelated;
+}
+
+.howTo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding-left: 20px;
+}
+
+.howTo li::marker {
+  color: var(--primary);
+}
+
+/* "To / Message" block: exactly what gets sent, for people who type it themselves. */
+.message {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 16px 20px;
+  border-radius: 16px;
+  background: var(--card-grey);
+  border: 1px solid var(--dark-10);
+}
+
+.message div {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.message dt {
+  width: 64px;
+  flex: none;
+  color: var(--dark-60);
+}
+
+.message dd {
+  margin: 0;
+  min-width: 0;
+}
+
+.mobileOnly {
+  display: none !important;
+}
+
+.code {
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: var(--secondary-10);
+  color: var(--primary);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 15px;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.promptBox {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  border: 1px solid var(--dark-10);
+  border-radius: 16px;
+  background: var(--card-grey);
+  overflow: hidden;
+}
+
+.prompt {
+  flex: 1;
+  margin: 0;
+  padding: 20px 20px 72px;
+  max-height: 320px;
+  overflow: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--primary-text);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.prompt:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+
+.primaryButton,
+.copyButton,
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 1000px;
+  white-space: nowrap;
+  transition: background-color 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+.primaryButton,
+.copyButton {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.primaryButton:hover,
+.copyButton:hover:not(:disabled) {
+  background: var(--primary-dark);
+}
+
+.copyButton {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+}
+
+.copyButton:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.secondaryButton {
+  border: 1px solid var(--dark-20);
+}
+
+.secondaryButton :global(.t-button) {
+  color: var(--dark);
+}
+
+.note {
+  color: var(--dark-60);
+  margin-top: -12px;
+}
+
+/* Pinned to the bottom so both cards' status lines align. */
+.status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--dark-10);
+  color: var(--dark-60);
+}
+
+.statusOk {
+  color: var(--green);
+}
+
+.errorBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 32px;
+  border: 1px solid var(--dark-10);
+  border-radius: 24px;
+  background: var(--white);
+  text-align: center;
+}
+
+.inlineError {
+  grid-column: 1 / -1;
+  color: var(--orange);
+  text-align: center;
+}
+
+@media (max-width: 1199.98px) {
+  .phoneStep { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 809.98px) {
+  .steps { grid-template-columns: minmax(0, 1fr); }
+  .card { padding: 24px; }
+  /* On a phone you can't scan your own screen: lead with the button. */
+  .qr { display: none; }
+  .desktopOnly { display: none; }
+  .mobileOnly { display: inline-flex !important; }
+  li.mobileOnly, span.mobileOnly { display: inline !important; }
+  .primaryButton { width: 100%; }
+  .message div { flex-direction: column; gap: 4px; }
+}

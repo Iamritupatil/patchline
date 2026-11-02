@@ -1,0 +1,227 @@
+/* "Components/User roles card" (ezA3Bb8pm) */
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 24px;
+  background: var(--white-80);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+/* Framer border: drawn inside, takes no layout space */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--white-10);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.text {
+  position: relative;
+  width: 100%;
+  text-align: start;
+}
+
+.folderHeader {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+/* "Meth Lab Folder Icon" */
+.folderIcon {
+  position: relative;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 1000px;
+  overflow: hidden;
+  background: url(/images/Uwu6oCqaeQirmXZy5Q37Nkh5gE.png) center / cover no-repeat;
+}
+
+.folderTitleGroup {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 4px;
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+.inviteControls {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+  padding-top: 16px;
+}
+
+.accessSection {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 24px;
+  width: 100%;
+  padding-top: 8px;
+}
+
+.accessList {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 24px;
+  width: 100%;
+}
+
+.accessRow {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.identity {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+.details {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 3px;
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+/* "Permission Select" pill; its border is animated as an inset shadow */
+.permissionSelect {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+  padding: 8px 12px;
+  border-radius: 1000px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px var(--dark-20);
+}
+
+.permissionLabel {
+  position: relative;
+  flex: none;
+  white-space: nowrap;
+  color: var(--dark);
+}
+
+.chevron {
+  flex: none;
+  color: var(--dark-80);
+}
+
+/* "Option container" */
+.options {
+  position: absolute;
+  right: 8px;
+  bottom: 158px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 138px;
+  height: 106px;
+  padding: 16px;
+  background: var(--white);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px var(--dark-10);
+}
+
+.option {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  text-align: start;
+}
+
+.overlay {
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  top: 50%;
+  height: 32px;
+  margin-top: -16px;
+  z-index: 0;
+  background: var(--secondary-20);
+  border-radius: 8px;
+}
+
+.cursor {
+  position: absolute;
+  width: 90px;
+  height: 62px;
+}
+
+.cursorIcon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 26px;
+  height: 26px;
+}
+
+.comment {
+  position: absolute;
+  left: 22px;
+  top: 22px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(21, 111, 238, 1);
+  border-radius: 24px;
+  box-shadow: inset 0 0 0 2px rgba(21, 111, 238, 1);
+}
+
+.commentText {
+  position: relative;
+  flex: none;
+  white-space: nowrap;
+  color: var(--white);
+}

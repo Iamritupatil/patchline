@@ -1,7 +1,7 @@
 [
   {
     "name": "start",
-    "description": "Connect this phone to a Patchline app. Call when the user sends 'start' followed by a 6-digit code (e.g. 'start 482913'). Pass only the digits.",
+    "description": "Connect this phone to a Patchline app. Call whenever the user's message contains 'start' followed by a 6-digit code, including a first message that begins with a join code (e.g. 'Hi! (K-D4ZH9B) start 482913'). Pass only the digits.",
     "inputSchema": {
       "type": "object",
       "properties": { "code": { "type": "string", "description": "The 6-digit code from the Patchline website" } },

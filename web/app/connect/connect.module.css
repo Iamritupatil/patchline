@@ -1,0 +1,43 @@
+/* Same section rhythm as the home page: 150px top clears the fixed nav, 40px side padding. */
+.section {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  padding: 150px 40px 100px;
+  background: var(--page-bg);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 600px;
+  text-align: center;
+}
+
+.title,
+.lead {
+  text-align: center;
+  text-wrap: balance;
+}
+
+@media (max-width: 1199.98px) {
+  .section { padding: 130px 40px 80px; }
+  .container { gap: 40px; max-width: 1000px; }
+}
+
+@media (max-width: 809.98px) {
+  .section { padding: 120px 16px 60px; }
+  .container { max-width: 500px; }
+}

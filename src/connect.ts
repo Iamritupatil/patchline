@@ -17,9 +17,25 @@ Claim code: ${claimToken}
 Patchline API: ${api}`
 }
 
-/** What the owner texts to link their phone. Prefixed with the Keiki join code on a shared number. */
-export const startText = (code: string) => `${config.KEIKI_JOIN_CODE ? `${config.KEIKI_JOIN_CODE} ` : ''}start ${code}`
+/** Splits Keiki's join link (`sms:<number>?body=<join message>`) into its number and message. */
+export function parseSmsLink(link: string | undefined): { number: string; body: string | undefined } | undefined {
+  const m = link?.match(/^sms:([+\d]+)(?:[?&]body=(.*))?$/)
+  if (!m) return undefined
+  return { number: m[1]!, body: m[2] ? decodeURIComponent(m[2]).trim() || undefined : undefined }
+}
+
+// The first text has two jobs: join the Keiki agent (Keiki's join message, e.g. "Hi! (K-D4ZH9B)") and link the
+// phone ("start 123456"). Explicit KEIKI_SMS_NUMBER / KEIKI_JOIN_CODE win; otherwise both come from the join link.
+const joinSms = parseSmsLink(config.KEIKI_JOIN_LINK)
+const smsNumber = config.KEIKI_SMS_NUMBER ?? joinSms?.number
+const joinPrefix = config.KEIKI_JOIN_CODE ?? joinSms?.body
+
+/** What the owner texts to link their phone, e.g. "Hi! (K-D4ZH9B) start 123456". */
+export const startText = (code: string) => `${joinPrefix ? `${joinPrefix} ` : ''}start ${code}`
 
 /** `sms:` link that opens Messages with the text pre-filled (rendered as a QR code on desktop). */
 export const smsLink = (code: string) =>
-  config.KEIKI_SMS_NUMBER ? `sms:${config.KEIKI_SMS_NUMBER}&body=${encodeURIComponent(startText(code))}` : null
+  smsNumber ? `sms:${smsNumber}?body=${encodeURIComponent(startText(code))}` : null
+
+/** The agent's number, shown on the site for people who type the text themselves. */
+export const smsDisplayNumber = smsNumber ?? null

@@ -1,0 +1,473 @@
+/* Framer "Features" (DXn5Hibuv).
+   Ancestors of the sticky indicator column and sticky cards use `overflow: clip` (not hidden):
+   it clips the same way but does not create a scroll container, so `position: sticky` keeps working. */
+.features {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  overflow: clip;
+}
+
+.contentContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 60px;
+  flex: 1 0 0;
+  min-width: 0;
+  padding: 100px 40px;
+  overflow: clip;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  width: 100%;
+  max-width: 1200px;
+  overflow: clip;
+}
+
+.headingTag {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 32px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.headingDescription {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.heading,
+.description {
+  position: relative;
+  flex: none;
+  max-width: 500px;
+  text-align: start;
+  text-wrap: balance;
+}
+
+/* "Feature indicator + card" */
+.indicatorCard {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 60px;
+  width: 100%;
+  overflow: clip;
+}
+
+/* "Feature card container" (column of the four sticky cards) */
+.cardList {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  flex: 1 0 0;
+  min-width: 0;
+  max-width: 70%;
+  overflow: clip;
+}
+
+/* Outer white shell of each card (the scroll targets) */
+.cardShell {
+  position: sticky;
+  top: 120px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px;
+  background: var(--white);
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+/* Framer borders are drawn on top and take no layout space. */
+.cardShell::after,
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--dark-10);
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  flex: 1 0 0;
+  min-width: 0;
+  background: var(--page-alt);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* "Step + info" */
+.stepInfo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 108px;
+  flex: 1 0 0;
+  min-width: 0;
+  max-width: 45%;
+  align-self: stretch;
+  padding: 32px;
+  overflow: hidden;
+}
+
+/* "Text + tags" */
+.textTags {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  flex: 1 0 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* "heading + description" */
+.cardText {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.cardTitle,
+.cardDescription {
+  position: relative;
+  width: 100%;
+  text-align: start;
+  text-wrap: balance;
+}
+
+.cardDescription {
+  color: var(--body-text);
+}
+
+/* "Content": the UI mock on its background image */
+.mock {
+  position: relative;
+  flex: 1 0 0;
+  min-width: 0;
+  height: 400px;
+  overflow: hidden;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.mockSearch { background-image: url(/images/7hinuK1ca5NnE0jxQx6Xp0Rgc.png); }
+.mockTesting { background-image: url(/images/uQIV8SHQg9uwGTWj9BcWtwDTp9E.png); }
+.mockShipping { background-image: url(/images/GomaCIogYngvxNRqv2ME24dcRUs.png); }
+.mockRoles { background-image: url(/images/um0Pkcj6XWmxCznDT9BJPaQKV8.png); }
+
+/* ---------- Card 1: "Search" ---------- */
+.search {
+  position: absolute;
+  left: 32px;
+  right: 31.5px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  overflow: hidden;
+}
+
+/* "Prompt Card" */
+.promptCard {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  padding: 16px;
+  background: var(--white-80);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 18px;
+}
+
+.searchBar {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.searchIcon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  color: var(--dark-40);
+}
+
+.waveFill {
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+/* "Search results" */
+.results {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+  padding: 24px;
+  background: var(--dark-5);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.resultsLight {
+  background: var(--white-80);
+}
+
+/* "Info container": ticker with a faded mask */
+.infoContainer {
+  position: relative;
+  width: 100%;
+  height: 108px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 19.051387392241377%, rgba(0, 0, 0, 0.51515) 51.51535560344828%, rgba(0, 0, 0, 0.5) 83.59543372844827%, rgba(0, 0, 0, 0) 100%);
+  mask-image: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 19.051387392241377%, rgba(0, 0, 0, 0.51515) 51.51535560344828%, rgba(0, 0, 0, 0.5) 83.59543372844827%, rgba(0, 0, 0, 0) 100%);
+}
+
+.infoText {
+  position: relative;
+  width: 100%;
+  text-align: start;
+  color: var(--dark);
+}
+
+.infoBlock {
+  position: relative;
+  width: 100%;
+}
+
+/* Body 2 paragraph spacing */
+.infoBlock .infoText + .infoText {
+  margin-top: 20px;
+}
+
+/* ---------- Card 2: "Testing fixes" ---------- */
+.testing {
+  position: absolute;
+  left: 32px;
+  right: 31.5px;
+  top: 150px;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  overflow: hidden;
+}
+
+.testingPill {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex: none;
+  padding: 16px;
+  background: var(--white-80);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 18px;
+}
+
+.testingWave {
+  flex: none;
+  width: 100px;
+}
+
+/* "Searching suggestions" */
+.suggestions {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  flex: 1 0 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* AnimatedBeamLines instance, rotated 180deg */
+.beams {
+  position: relative;
+  width: 100%;
+  flex: 1 0 0;
+  min-height: 0;
+  transform: rotate(180deg);
+}
+
+.beamsInner {
+  position: absolute;
+  inset: 0;
+}
+
+/* ---------- Card 3: "Automation" ---------- */
+.automation {
+  position: absolute;
+  left: 32px;
+  right: 31.5px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  overflow: hidden;
+}
+
+/* "Automating" */
+.automating {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--white-80);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.automating .automatingWave {
+  flex: 1 0 0;
+  min-width: 0;
+  white-space: normal;
+}
+
+/* ---------- Card 4: "User roles card" ---------- */
+.roles {
+  position: absolute;
+  left: 32px;
+  right: 32px;
+  top: 32px;
+}
+
+/* ---------- Tablet ---------- */
+@media (max-width: 1199.98px) {
+  .contentContainer { padding: 60px 40px; }
+  .content { gap: 40px; max-width: 1000px; }
+  .headingTag { gap: 24px; }
+  .stepInfo { padding: 24px; }
+  .mock { height: 300px; }
+
+  .search {
+    left: 16px;
+    right: 16px;
+    top: 24px;
+    bottom: 24px;
+    transform: none;
+  }
+
+  .testing { left: 16px; right: 16px; top: 80px; }
+  .automation { left: 16px; right: 16px; }
+  .roles { left: 16px; right: 16px; top: 24px; }
+}
+
+/* ---------- Phone ---------- */
+@media (max-width: 809.98px) {
+  .contentContainer { padding: 60px 16px; }
+  .content { max-width: 500px; }
+  .cardList { max-width: 100%; }
+
+  .card { flex-direction: column; }
+  .mock { order: -1; width: 100%; flex: none; }
+
+  .stepInfo {
+    justify-content: center;
+    gap: 0;
+    padding: 24px;
+    max-width: 100%;
+    width: 100%;
+    flex: none;
+    align-self: auto;
+  }
+
+  .textTags { flex: none; }
+
+  .search {
+    left: 24px;
+    right: 24px;
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
+    gap: 16px;
+  }
+
+  .testing { left: 24px; right: 24px; gap: 16px; }
+  .automation { left: 24px; right: 24px; gap: 16px; }
+  .roles { left: 24px; right: 24px; top: 32px; }
+}
