@@ -24,7 +24,8 @@ const Env = z
   })
   .superRefine((env, ctx) => {
     if (env.NODE_ENV !== 'production') return
-    for (const key of ['KEIKI_API_KEY', 'KEIKI_AGENT_ID', 'KEIKI_WEBHOOK_SECRET', 'ADMIN_TOKEN'] as const) {
+    // KEIKI_WEBHOOK_SECRET is not required to boot: without it, /keiki/tools refuses every call (503).
+    for (const key of ['KEIKI_API_KEY', 'KEIKI_AGENT_ID', 'ADMIN_TOKEN'] as const) {
       if (!env[key]) ctx.addIssue({ code: 'custom', path: [key], message: 'required in production' })
     }
   })

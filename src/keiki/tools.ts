@@ -75,8 +75,11 @@ keikiTools.post('/:name', async (c) => {
   const raw = await c.req.text()
   const header = (n: string) => c.req.header(n)
 
-  if (config.KEIKI_DEBUG && !isProd) {
-    log.info('keiki tool call (debug)', { headers: Object.keys(c.req.header()), body: raw.slice(0, 2000) })
+  // Opt-in, to learn Keiki's signing headers. Values of signature/timestamp headers are not secret (HMAC output).
+  if (config.KEIKI_DEBUG) {
+    const h = c.req.header()
+    const sigHeaders = Object.fromEntries(Object.entries(h).filter(([k]) => /sign|timestamp|keiki|orchid/i.test(k) && !/key/i.test(k)))
+    log.info('keiki tool call (debug)', { headers: Object.keys(h), sigHeaders, body: raw.slice(0, 2000) })
   }
 
   if (config.KEIKI_WEBHOOK_SECRET) {
