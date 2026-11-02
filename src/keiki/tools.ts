@@ -69,17 +69,32 @@ async function start(input: Record<string, unknown>, phone: string): Promise<Rep
 
 export const TOOL_NAMES = ['start', ...Object.keys(ownerTools)]
 
+const SIGNATURE_HEADERS = new Set(['x-keiki-signature', 'x-keiki-timestamp', 'keiki-signature', 'x-signature', 'x-timestamp'])
+
+/** `{input: [code], context: [phone, messages]}`: field names only, for the debug log. */
+function shapeOf(raw: string): unknown {
+  try {
+    const body = JSON.parse(raw) as Record<string, unknown>
+    return Object.fromEntries(
+      Object.entries(body).map(([k, v]) => [k, v && typeof v === 'object' ? Object.keys(v) : typeof v]),
+    )
+  } catch {
+    return 'not json'
+  }
+}
+
 export const keikiTools = new Hono()
 
 keikiTools.post('/:name', async (c) => {
   const raw = await c.req.text()
   const header = (n: string) => c.req.header(n)
 
-  // Opt-in, to learn Keiki's signing headers. Values of signature/timestamp headers are not secret (HMAC output).
+  // Opt-in, to learn Keiki's signing format. Logs header names, allowlisted signature headers (HMAC output, not
+  // secret) and the body's field names only. Never the body itself: it carries the user's messages.
   if (config.KEIKI_DEBUG) {
     const h = c.req.header()
-    const sigHeaders = Object.fromEntries(Object.entries(h).filter(([k]) => /sign|timestamp|keiki|orchid/i.test(k) && !/key/i.test(k)))
-    log.info('keiki tool call (debug)', { headers: Object.keys(h), sigHeaders, body: raw.slice(0, 2000) })
+    const sigHeaders = Object.fromEntries(Object.entries(h).filter(([k]) => SIGNATURE_HEADERS.has(k.toLowerCase())))
+    log.info('keiki tool call (debug)', { headers: Object.keys(h), sigHeaders, bodyShape: shapeOf(raw) })
   }
 
   if (config.KEIKI_WEBHOOK_SECRET) {
