@@ -10,6 +10,11 @@ import { skill } from './skill.js'
 export const app = new Hono()
 
 app.get('/health', (c) => c.json({ ok: true }))
+
+// Maritime agent contract: POST /chat must answer within 30s. Owners talk to Patchline over iMessage, not here.
+app.post('/chat', (c) =>
+  c.json({ response: 'Patchline is running. Owners talk to it over iMessage; apps send errors to /ingest.' }),
+)
 app.route('/ingest', ingest)
 app.route('/keiki/tools', keikiTools)
 app.route('/api', api)

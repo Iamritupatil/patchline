@@ -7,7 +7,7 @@ import { migrate } from './store.js'
 
 await migrate()
 
-const server = serve({ fetch: app.fetch, port: config.PORT }, (info) => {
+const server = serve({ fetch: app.fetch, port: config.PORT, hostname: '0.0.0.0' }, (info) => {
   log.info('patchline listening', { port: info.port, env: config.NODE_ENV })
 })
 
