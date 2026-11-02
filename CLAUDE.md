@@ -40,7 +40,10 @@ Demo startup app on Vercel: visitors break it and get the full loop on their own
 - `SYSTEM_DESIGN.md`: components, flows, data model, lifecycle, failure modes (partly outdated: see this file)
 - `STACK.md`: stack choices and why
 
-## Folder layout (backend at root, site later in `web/`)
+## Folder layout (backend at root, site in `web/`)
+`web/` is a Next.js static site rebuilt 1:1 from the Framer design (sections in `web/components/sections/`, Framer code
+components vendored in `web/components/framer/`). `/connect` calls `POST /api/signup` and polls `/api/me/status`.
+The first text is Keiki's join message + `start 123456` (built from `KEIKI_JOIN_LINK` in `src/connect.ts`).
 ```
 src/
   server.ts          boot: migrate + serve
@@ -85,6 +88,8 @@ npm run keiki:tools    # register webhook tools (PUBLIC_URL must be public)
 maritime create patchline --repo <url> --public --port 8080
 maritime env set patchline KEY=value --reload
 maritime logs patchline -f
+cd web && npm run dev  # site on :3000 (NEXT_PUBLIC_PATCHLINE_API → backend; backend CORS_ORIGINS must include the site)
+cd web && npm run build  # static export to web/out (Vercel: Root Directory = web)
 ```
 
 ## Env vars

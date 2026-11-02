@@ -1,0 +1,259 @@
+/* "Prompt Card" (WiYRi7zrg), variants 1-5 */
+.card {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  width: 466px;
+  height: 593px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 24px;
+  border-radius: 16px;
+  background: var(--white-80);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow:
+    0px 0.6021873017743928px 0.6021873017743928px -1.25px rgba(0, 0, 0, 0.18),
+    0px 2.288533303243457px 2.288533303243457px -2.5px rgba(0, 0, 0, 0.16),
+    0px 10px 10px -3.75px rgba(0, 0, 0, 0.06);
+}
+
+/* "Container" (lFKZoGBbG) */
+.container {
+  position: relative;
+  width: 100%;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 24px;
+}
+
+/* Variant 5: fills the card above the prompt bar, content pinned to the bottom, older messages clipped at the top */
+.containerEnd {
+  flex: 1 0 0;
+  min-height: 0;
+  justify-content: flex-end;
+  overflow: hidden;
+  padding: 0 0 40px;
+}
+
+/* Shared "Prompt Bar" chat bubble */
+.bubble {
+  flex: none;
+  width: 100%;
+  max-width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  background: var(--dark-5);
+}
+
+.bubbleText {
+  width: 100%;
+  color: var(--dark);
+  text-align: start;
+}
+
+/* Jg3RTiZgu: reply row (vertical in variants 4-5) */
+.replyRow {
+  flex: none;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+/* T8kCxMTrJ: loader + Text Wave */
+.thinkingRow {
+  flex: none;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.ripple {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  display: flex;
+  width: 24px;
+  height: 24px;
+}
+
+.waveWrap {
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+/* dReXYRAyQ: suggestions block (variant 5) */
+.suggestions {
+  flex: none;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.chips {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.chip {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 12px 16px;
+  border-radius: 1000px;
+  background: var(--secondary-20);
+}
+
+.chipText {
+  color: var(--dark);
+  text-align: start;
+  white-space: nowrap;
+}
+
+.suggestionsLabelRow {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+}
+
+.dim {
+  opacity: 0.5;
+  text-align: start;
+}
+
+/* SAvUI09Tu: "Diagnosis complete" status row */
+.statusRow {
+  flex: none;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkIcon {
+  flex: none;
+  width: 16px;
+  height: 24px;
+  opacity: 0.5;
+  color: var(--body-text);
+}
+
+/* d4QEM08j1: input bar at the bottom */
+.promptBar {
+  flex: none;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 14px;
+  border-radius: 16px;
+  background: var(--dark-5);
+}
+
+.placeholder {
+  flex: none;
+  color: var(--dark-60);
+  text-align: start;
+}
+
+.barContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 52px;
+  overflow: hidden;
+}
+
+.barRight {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 14px;
+}
+
+.barLeft {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.barIcon {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  color: rgba(17, 22, 46, 0.45);
+}
+
+.runAgent {
+  flex: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  padding: 10px;
+  border-radius: 1000px;
+  background: var(--primary);
+  color: var(--white);
+  cursor: pointer;
+  transition: opacity 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+.runAgent:hover {
+  opacity: 0.9;
+}
+
+.runIcon {
+  width: 14px;
+  height: 14px;
+}
+
+@media (max-width: 809.98px) {
+  .card {
+    width: 100%;
+  }
+}

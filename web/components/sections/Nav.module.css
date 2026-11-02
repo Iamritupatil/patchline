@@ -1,0 +1,182 @@
+/* Fixed chrome wrapper (layout template frame m4r1F18z_) */
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  pointer-events: none;
+}
+
+.wrapper > * {
+  pointer-events: auto;
+}
+
+/* "Navigation bar" (UXHe4J1PZ). Framer borders don't take layout space, so padding is reduced by the 1px border. */
+.desktop {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+  padding: 5px 7px;
+  border: 1px solid var(--dark-10);
+  border-radius: 1000px;
+  background: var(--white);
+}
+
+.logoContainer {
+  flex: 1 0 0;
+  min-width: 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0 8px 4px;
+}
+
+.logo {
+  flex: none;
+  display: block;
+  height: 100%;
+  aspect-ratio: 5.12;
+  background: url(/images/RlkJ2gfzZ4jl9N79Wgnhiz3IY.png) center / contain no-repeat;
+}
+
+.links {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+}
+
+.link {
+  flex: none;
+  white-space: nowrap;
+}
+
+.actions {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  padding: 2px 0;
+}
+
+/* Variants "Phone Closed" / "Phone Open" (tablet + phone) */
+.mobile {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1000px;
+  display: none;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 4px;
+  overflow: hidden;
+  padding: 7px;
+  border: 1px solid var(--dark-10);
+  border-radius: 24px;
+  background: var(--white);
+}
+
+.mobileTop {
+  width: 100%;
+  flex: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0 0 8px;
+}
+
+.mobileLogo {
+  flex: none;
+  display: block;
+  width: 125px;
+  align-self: stretch;
+  cursor: default;
+  background: url(/images/RlkJ2gfzZ4jl9N79Wgnhiz3IY.png) center / contain no-repeat;
+}
+
+.menuTrigger {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid var(--dark-10);
+  border-radius: 1000px;
+  background: var(--white);
+  color: var(--dark);
+  cursor: pointer;
+}
+
+.menuIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.mobileLinks {
+  width: 100%;
+  flex: none;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px 16px;
+}
+
+.mobileLink {
+  width: 100%;
+  cursor: pointer;
+}
+
+.mobileActions {
+  width: 100%;
+  flex: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+}
+
+@media (max-width: 1199.98px) {
+  .desktop {
+    display: none;
+  }
+  .mobile {
+    display: flex;
+  }
+}
+
+@media (max-width: 809.98px) {
+  .mobile {
+    max-width: 500px;
+  }
+}

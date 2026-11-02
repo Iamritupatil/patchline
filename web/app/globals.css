@@ -1,0 +1,144 @@
+/* Design tokens and text styles, copied 1:1 from the Framer project.
+   Breakpoints match Framer: desktop >= 1200px, tablet 810-1199px, phone < 810px. */
+
+@font-face {
+  font-family: "PP Neue Montreal";
+  src: url("/fonts/PPNeueMontreal-Book.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "PP Neue Montreal";
+  src: url("/fonts/PPNeueMontreal-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+
+:root {
+  /* Brand */
+  --primary: rgb(1, 43, 255);
+  --primary-dark: rgb(2, 37, 212);
+  --primary-20: rgba(1, 43, 255, 0.2);
+  --secondary: rgb(9, 174, 255);
+  --secondary-dark: rgb(9, 153, 224);
+  --secondary-20: rgba(9, 174, 255, 0.2);
+  --secondary-10: rgba(9, 174, 255, 0.1);
+  --hero-bg: rgb(7, 11, 62);
+  --green: rgb(11, 186, 26);
+  --orange: rgb(255, 84, 0);
+
+  /* Neutrals */
+  --white: rgb(255, 255, 255);
+  --white-80: rgba(255, 255, 255, 0.8);
+  --white-60: rgba(255, 255, 255, 0.6);
+  --white-40: rgba(255, 255, 255, 0.4);
+  --white-20: rgba(255, 255, 255, 0.2);
+  --white-10: rgba(255, 255, 255, 0.1);
+  --white-5: rgba(255, 255, 255, 0.05);
+  --dark: rgb(0, 0, 0);
+  --dark-80: rgba(0, 0, 0, 0.8);
+  --dark-60: rgba(0, 0, 0, 0.6);
+  --dark-40: rgba(0, 0, 0, 0.4);
+  --dark-20: rgba(0, 0, 0, 0.2);
+  --dark-10: rgba(0, 0, 0, 0.1);
+  --dark-5: rgba(0, 0, 0, 0.05);
+  --body-text: rgba(0, 0, 0, 0.7);
+  --body-text-grey: rgb(115, 115, 115);
+  --primary-text: rgb(23, 23, 23);
+  --ink: rgb(17, 21, 18);
+  --page-bg: rgb(250, 250, 250);
+  --page-alt: rgb(246, 248, 247);
+  --card-grey: rgb(250, 250, 250);
+
+  /* Fonts (Geist, Inter and Inter Tight come from next/font in app/layout.tsx) */
+  --font-heading: "PP Neue Montreal", var(--font-inter-tight), system-ui, sans-serif;
+  --font-body: var(--font-geist), system-ui, sans-serif;
+  --font-ui: var(--font-inter), system-ui, sans-serif;
+  --font-features: "blwf", "cv03", "cv04", "cv09", "cv11";
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--page-bg);
+  color: var(--dark);
+  font-family: var(--font-body);
+  font-feature-settings: var(--font-features);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* Text styles ("Text Styles/*" presets in Framer) */
+.t-h1, .t-h2, .t-h3, .t-h4, .t-h5, .t-h6 {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-style: normal;
+  color: var(--dark);
+  font-feature-settings: var(--font-features);
+}
+.t-h1 { font-size: 68px; letter-spacing: 0; line-height: 1.15em; }
+.t-h2 { font-size: 46px; letter-spacing: 0; line-height: 1.1em; }
+.t-h3 { font-size: 24px; letter-spacing: 0; line-height: 1.2em; }
+.t-h4 { font-size: 22px; letter-spacing: 0; line-height: 1.18em; }
+.t-h5 { font-size: 20px; letter-spacing: 0; line-height: 1.24em; }
+.t-h6 { font-size: 16px; letter-spacing: 0.1px; line-height: 1.2em; }
+
+.t-body1, .t-body2, .t-body3, .t-label, .t-button {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-feature-settings: var(--font-features);
+}
+.t-body1 { font-size: 18px; font-weight: 400; letter-spacing: -0.1px; line-height: 1.55em; color: var(--body-text); }
+.t-body2 { font-size: 16px; font-weight: 400; letter-spacing: -0.1px; line-height: 1.6em; color: var(--body-text); }
+.t-body3 { font-size: 14px; font-weight: 400; letter-spacing: -0.1px; line-height: 1.5em; color: var(--body-text); }
+.t-label { font-size: 12px; font-weight: 500; letter-spacing: 0; line-height: 1.35em; color: var(--body-text); }
+.t-button { font-size: 16px; font-weight: 500; letter-spacing: -0.1px; line-height: 1.6em; color: var(--white); }
+
+@media (max-width: 1199.98px) {
+  .t-h1 { font-size: 52px; }
+  .t-h2 { font-size: 42px; line-height: 1.2em; }
+  .t-h3 { font-size: 22px; }
+  .t-h4 { font-size: 18px; }
+  .t-h5 { font-size: 18px; }
+  .t-h6 { font-size: 14px; letter-spacing: 0; }
+}
+
+@media (max-width: 809.98px) {
+  .t-h1 { font-size: 42px; }
+  .t-h2 { font-size: 36px; }
+}
+
+/* Link styles */
+.link-dark { color: var(--dark-60); transition: color 0.2s; }
+.link-dark:hover { color: var(--dark); text-decoration: underline; }
+.link-light { color: var(--white-80); transition: color 0.2s; }
+.link-light:hover { color: var(--white); text-decoration: underline; }

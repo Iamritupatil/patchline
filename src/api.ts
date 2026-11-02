@@ -3,7 +3,7 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { z } from 'zod'
 import { config, corsOrigins } from './config.js'
-import { connectPrompt, smsLink, startText } from './connect.js'
+import { connectPrompt, smsDisplayNumber, smsLink, startText } from './connect.js'
 import { listIncidents } from './incidents.js'
 import { log } from './log.js'
 import { enqueue } from './pipeline.js'
@@ -48,6 +48,7 @@ const phoneStep = (code: string, expiresAt: number) => ({
   expiresAt,
   text: startText(code),
   smsLink: smsLink(code),
+  number: smsDisplayNumber,
   joinLink: config.KEIKI_JOIN_LINK ?? null,
 })
 

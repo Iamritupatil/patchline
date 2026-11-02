@@ -1,0 +1,24 @@
+/* Layout template + "Main" frame from Framer: vertical stacks, no gaps, clipped. */
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  background: var(--white);
+  overflow: clip;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  width: 100%;
+  background: var(--page-bg);
+  overflow: clip;
+}
+
+.main > * {
+  width: 100%;
+}

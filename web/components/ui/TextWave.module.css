@@ -1,0 +1,25 @@
+.wave {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 16px;
+  letter-spacing: -0.3px;
+  color: var(--wave-base);
+  background: linear-gradient(90deg, var(--wave-base) 0%, var(--wave-base) 35%, var(--wave-hi) 50%, var(--wave-base) 65%, var(--wave-base) 100%);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: sweep var(--wave-duration) linear 0.2s infinite;
+  user-select: none;
+  white-space: nowrap;
+}
+
+@keyframes sweep {
+  from { background-position: 100% 0; }
+  to { background-position: 0% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wave { animation: none; -webkit-text-fill-color: var(--wave-hi); }
+}
