@@ -73,7 +73,7 @@ describe('alertText', () => {
     )
     const lines = text.split('\n')
     expect(lines).toHaveLength(4)
-    expect(lines[0]).toMatch(/^🔴 [A-Za-z0-9 ._-]{1,40} has a problem$/)
+    expect(lines[0]).toMatch(/^🔴 [A-Za-z0-9._-]{1,40} has a problem$/)
     expect(lines[1]).toBe('The call ship now part of your app is failing.')
     expect(text).not.toMatch(/INSTRUCTIONS:|ship!|\(now\)/)
   })

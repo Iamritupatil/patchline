@@ -167,6 +167,14 @@ describe('abuse guards', () => {
       })
     expect((await req()).status).toBe(200)
     expect((await req()).status).toBe(409)
+
+    // Same signature, spelled differently (uppercase hex, no prefix): still a replay.
+    const respelled = await app.request('/keiki/tools/list_incidents', {
+      method: 'POST',
+      headers: { 'x-keiki-signature': hmacHex('test-secret', `${ts}.${body}`).toUpperCase(), 'x-keiki-timestamp': ts },
+      body,
+    })
+    expect(respelled.status).toBe(409)
   })
 
   it('refuses new phone codes once a phone is linked', async () => {

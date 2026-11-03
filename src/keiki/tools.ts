@@ -105,8 +105,11 @@ keikiTools.post('/:name', async (c) => {
     if (!verifyKeiki(header, raw, config.KEIKI_WEBHOOK_SECRET)) return c.json({ ok: false, message: 'bad signature' }, 401)
     // A signed call is good for 5 minutes, so remember it: a captured call can't be replayed. Keyed per tool because
     // the signature doesn't cover the path, and the agent may call two tools with the same body in one turn.
-    const sig = header('x-keiki-signature') ?? header('keiki-signature') ?? ''
-    if (!(await markSeen(`keiki:${c.req.param('name')}:${sha256(sig)}`))) return c.json({ ok: false, message: 'duplicate' }, 409)
+    // Key on the signed content, not the header text: the same signature can be spelled several ways (case, prefix).
+    const ts = header('x-keiki-timestamp') ?? /(?:^|,)\s*t=(\d+)/.exec(header('keiki-signature') ?? '')?.[1] ?? ''
+    if (!(await markSeen(`keiki:${c.req.param('name')}:${sha256(`${ts}.${raw}`)}`))) {
+      return c.json({ ok: false, message: 'duplicate' }, 409)
+    }
   } else if (isProd) {
     return c.json({ ok: false, message: 'not configured' }, 503)
   }
