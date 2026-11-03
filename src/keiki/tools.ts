@@ -9,7 +9,7 @@ import { connectedText, incidentDetail, incidentLine } from '../messages.js'
 import { allow } from '../ratelimit.js'
 import { markSeen } from '../store.js'
 import { normalizePhone, redeemCode, tenantsForPhone, type Tenant } from '../tenants.js'
-import { verifyKeiki } from './auth.js'
+import { verifiedTimestamp } from './auth.js'
 
 const ToolCall = z.object({
   input: z.record(z.string(), z.unknown()).default({}),
@@ -102,11 +102,11 @@ keikiTools.post('/:name', async (c) => {
   }
 
   if (config.KEIKI_WEBHOOK_SECRET) {
-    if (!verifyKeiki(header, raw, config.KEIKI_WEBHOOK_SECRET)) return c.json({ ok: false, message: 'bad signature' }, 401)
+    const ts = verifiedTimestamp(header, raw, config.KEIKI_WEBHOOK_SECRET)
+    if (ts === undefined) return c.json({ ok: false, message: 'bad signature' }, 401)
     // A signed call is good for 5 minutes, so remember it: a captured call can't be replayed. Keyed per tool because
     // the signature doesn't cover the path, and the agent may call two tools with the same body in one turn.
-    // Key on the signed content, not the header text: the same signature can be spelled several ways (case, prefix).
-    const ts = header('x-keiki-timestamp') ?? /(?:^|,)\s*t=(\d+)/.exec(header('keiki-signature') ?? '')?.[1] ?? ''
+    // Key on exactly what was verified (its timestamp + body), never on header text an attacker can re-spell or add.
     if (!(await markSeen(`keiki:${c.req.param('name')}:${sha256(`${ts}.${raw}`)}`))) {
       return c.json({ ok: false, message: 'duplicate' }, 409)
     }

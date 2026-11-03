@@ -177,6 +177,21 @@ describe('abuse guards', () => {
     expect(respelled.status).toBe(409)
   })
 
+  it('a decoy timestamp header does not change the replay key', async () => {
+    const body = JSON.stringify({ input: { status: 'open' }, context: { phone: PHONE } })
+    const ts = `${Math.floor(Date.now() / 1000)}`
+    const v1 = hmacHex('test-secret', `${ts}.${body}`)
+    const req = (decoy?: string) =>
+      app.request('/keiki/tools/list_incidents', {
+        method: 'POST',
+        headers: { 'keiki-signature': `t=${ts},v1=${v1}`, ...(decoy ? { 'x-keiki-timestamp': decoy } : {}) },
+        body,
+      })
+    expect((await req()).status).toBe(200)
+    expect((await req('1')).status).toBe(409)
+    expect((await req('2')).status).toBe(409)
+  })
+
   it('refuses new phone codes once a phone is linked', async () => {
     const res = await app.request('/api/me/onboarding-code', {
       method: 'POST',
