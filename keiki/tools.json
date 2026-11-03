@@ -26,10 +26,11 @@
   },
   {
     "name": "ignore",
-    "description": "Mute an incident so Patchline never texts about this error again. Use for 'ignore', 'mute', 'stop telling me about this'. Omit id for the latest open incident.",
+    "description": "Mute an incident so Patchline never texts about this error again. Use for 'ignore', 'mute', 'stop telling me about this'. Needs the incident number: take it from the user's message or the last Patchline alert, or ask the user which one.",
     "inputSchema": {
       "type": "object",
-      "properties": { "id": { "type": "integer", "description": "Incident number" } }
+      "properties": { "id": { "type": "integer", "description": "Incident number, e.g. 12 for #12" } },
+      "required": ["id"]
     }
   }
 ]

@@ -7,7 +7,7 @@ import { connectPrompt, smsDisplayNumber, smsLink, startText } from './connect.j
 import { listIncidents } from './incidents.js'
 import { log } from './log.js'
 import { enqueue } from './pipeline.js'
-import { allow } from './ratelimit.js'
+import { allow, clientIp } from './ratelimit.js'
 import { maskPhone } from './scrub.js'
 import {
   claimTenant,
@@ -37,9 +37,6 @@ const Claim = z.object({
   appName: z.string().trim().max(60).optional(),
   allowedOrigins: z.array(Origin).max(10).default([]),
 })
-
-const clientIp = (h: (n: string) => string | undefined) =>
-  h('x-forwarded-for')?.split(',')[0]?.trim() || h('x-real-ip') || 'unknown'
 
 const ingestUrl = (key: string) => `${config.PUBLIC_URL}/ingest/${key}`
 
@@ -133,8 +130,11 @@ api.get('/me/incidents', async (c) => {
   return c.json({ incidents: items.map(({ sample: _s, fingerprint: _f, ...rest }) => rest) })
 })
 
+// After the first phone is linked, a leaked session token must not be able to add another owner.
 api.post('/me/onboarding-code', async (c) => {
-  const { code, expiresAt } = await newOnboardingCode(c.get('tenant').id)
+  const t = c.get('tenant')
+  if ((await ownerPhones(t.id)).length > 0) return c.json({ error: 'phone_already_connected' }, 409)
+  const { code, expiresAt } = await newOnboardingCode(t.id)
   return c.json(phoneStep(code, expiresAt))
 })
 

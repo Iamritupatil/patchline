@@ -6,9 +6,11 @@ import { all, migrate } from '../src/store.js'
 
 const PHONE = '+14155550123'
 
+// Each helper call gets its own timestamp (inside the 5-minute skew) so repeated calls aren't seen as replays.
+let calls = 0
 async function tool(name: string, input: Record<string, unknown>, phone = PHONE) {
   const body = JSON.stringify({ input, context: { phone } })
-  const ts = `${Math.floor(Date.now() / 1000)}`
+  const ts = `${Math.floor(Date.now() / 1000) - (calls++ % 250)}`
   const res = await app.request(`/keiki/tools/${name}`, {
     method: 'POST',
     headers: { 'x-keiki-signature': `sha256=${hmacHex('test-secret', `${ts}.${body}`)}`, 'x-keiki-timestamp': ts },
@@ -144,5 +146,82 @@ describe('owner tools', () => {
     const res = await tool('get_incident', { id: inc!.id })
     expect(res.ok).toBe(false)
     expect(res.message).not.toContain('private failure')
+  })
+})
+
+describe('abuse guards', () => {
+  it('ignore needs an explicit incident number', async () => {
+    const res = await tool('ignore', {})
+    expect(res.ok).toBe(false)
+    expect(res.message).toContain('ignore #')
+  })
+
+  it('rejects a replayed signed tool call', async () => {
+    const body = JSON.stringify({ input: { status: 'all' }, context: { phone: PHONE } })
+    const ts = `${Math.floor(Date.now() / 1000)}`
+    const req = () =>
+      app.request('/keiki/tools/list_incidents', {
+        method: 'POST',
+        headers: { 'x-keiki-signature': `sha256=${hmacHex('test-secret', `${ts}.${body}`)}`, 'x-keiki-timestamp': ts },
+        body,
+      })
+    expect((await req()).status).toBe(200)
+    expect((await req()).status).toBe(409)
+
+    // Same signature, spelled differently (uppercase hex, no prefix): still a replay.
+    const respelled = await app.request('/keiki/tools/list_incidents', {
+      method: 'POST',
+      headers: { 'x-keiki-signature': hmacHex('test-secret', `${ts}.${body}`).toUpperCase(), 'x-keiki-timestamp': ts },
+      body,
+    })
+    expect(respelled.status).toBe(409)
+  })
+
+  it('a decoy timestamp header does not change the replay key', async () => {
+    const body = JSON.stringify({ input: { status: 'open' }, context: { phone: PHONE } })
+    const ts = `${Math.floor(Date.now() / 1000)}`
+    const v1 = hmacHex('test-secret', `${ts}.${body}`)
+    const req = (decoy?: string) =>
+      app.request('/keiki/tools/list_incidents', {
+        method: 'POST',
+        headers: { 'keiki-signature': `t=${ts},v1=${v1}`, ...(decoy ? { 'x-keiki-timestamp': decoy } : {}) },
+        body,
+      })
+    expect((await req()).status).toBe(200)
+    expect((await req('1')).status).toBe(409)
+    expect((await req('2')).status).toBe(409)
+  })
+
+  it('refuses new phone codes once a phone is linked', async () => {
+    const res = await app.request('/api/me/onboarding-code', {
+      method: 'POST',
+      headers: { authorization: `Bearer ${signup.sessionToken}` },
+    })
+    expect(res.status).toBe(409)
+  })
+
+  it('rejects oversized bodies before parsing', async () => {
+    const big = 'x'.repeat(300 * 1024)
+    const ingestRes = await app.request(`/ingest/${signup.ingestKey}`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'content-length': String(big.length) },
+      body: big,
+    })
+    expect(ingestRes.status).toBe(413)
+    const toolRes = await app.request('/keiki/tools/start', {
+      method: 'POST',
+      headers: { 'content-length': String(big.length) },
+      body: big,
+    })
+    expect(toolRes.status).toBe(413)
+  })
+
+  it('keeps recording incidents past the text budget', async () => {
+    const o = await signupAndClaim('noisy')
+    const before = await all<{ c: number }>("SELECT COUNT(*) AS c FROM incidents WHERE service = 'noisy-svc'")
+    for (let i = 0; i < 8; i++) await send(o.ingestKey, { service: 'noisy-svc', level: 'error', message: `boom ${i}`, stack: `at f${i} (src/f${i}.ts:1:1)` })
+    await drain()
+    const after = await all<{ c: number }>("SELECT COUNT(*) AS c FROM incidents WHERE service = 'noisy-svc'")
+    expect(after[0]!.c - before[0]!.c).toBe(8)
   })
 })
