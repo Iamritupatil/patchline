@@ -6,3 +6,4 @@ next-env.d.ts
 # Licensed font files are added locally, never committed
 public/fonts/*
 !public/fonts/README.md
+.vercel

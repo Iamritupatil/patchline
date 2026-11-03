@@ -22,7 +22,7 @@ export function Hero() {
                 </RevealParagraph>
               </div>
               <Appear className={styles.buttonContainer} transition={buttonsAppear}>
-                <Button label="See how it works" href="/#how-it-works" variant="secondary" icon={false} />
+                <Button label="Try the live demo" href="/demo" variant="secondary" icon={false} />
                 <Button label="Connect your app" href="/connect" variant="primary" icon />
               </Appear>
             </div>
