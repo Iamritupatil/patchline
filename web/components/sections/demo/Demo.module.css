@@ -1,0 +1,408 @@
+/* Live demo: progress steps, then the sample app (browser frame) next to the founder's iPhone. */
+
+.demo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+}
+
+/* Progress */
+.steps {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 6px;
+  border: 1px solid var(--dark-10);
+  border-radius: 1000px;
+  background: var(--white);
+  color: var(--dark-40);
+  transition: border-color 0.3s, color 0.3s;
+}
+
+.stepNumber {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 100px;
+  background: var(--dark-5);
+  font-size: 11px;
+}
+
+.stepCurrent {
+  border-color: var(--primary);
+  color: var(--dark);
+}
+.stepCurrent .stepNumber {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.stepDone {
+  color: var(--dark-60);
+}
+.stepDone .stepNumber {
+  background: var(--green);
+  color: var(--white);
+}
+
+/* Stage: app | phone */
+.stage {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 48px;
+  width: 100%;
+}
+
+/* Sample app in a browser frame */
+.browser {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 560px;
+  border: 1px solid var(--dark-10);
+  border-radius: 24px;
+  background: var(--white);
+  box-shadow: 0px 30px 60px -20px rgba(7, 11, 62, 0.18);
+  overflow: hidden;
+}
+
+.chrome {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--dark-10);
+  background: var(--page-alt);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 100px;
+  background: var(--dark-10);
+}
+
+.url {
+  flex: 1 1 0;
+  min-width: 0;
+  margin-left: 10px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  background: var(--white);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 28px;
+}
+
+.appHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.brand {
+  color: var(--dark);
+}
+
+.lines {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 20px;
+  border: 1px solid var(--dark-10);
+  border-radius: 16px;
+  background: var(--card-grey);
+}
+
+.line {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.discount span {
+  color: var(--green);
+}
+
+.total {
+  padding-top: 10px;
+  border-top: 1px solid var(--dark-10);
+}
+.total span {
+  color: var(--dark);
+  font-weight: 500;
+}
+
+.coupon {
+  display: flex;
+  gap: 10px;
+}
+
+.couponInput {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 10px 14px;
+  border: 1px solid var(--dark-20);
+  border-radius: 12px;
+  background: var(--white);
+  color: var(--dark);
+  font-family: var(--font-ui);
+  letter-spacing: 0.5px;
+}
+
+.applyButton {
+  flex: none;
+  padding: 10px 22px;
+  border: 0;
+  border-radius: 1000px;
+  background: var(--primary);
+  cursor: pointer;
+  transition: background-color 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+.applyButton:hover:not(:disabled) {
+  background: var(--primary-dark);
+}
+.applyButton:disabled {
+  background: var(--green);
+  cursor: default;
+}
+
+.pulse {
+  animation: pulse 1.8s ease-out infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 var(--primary-20); }
+  70% { box-shadow: 0 0 0 12px rgba(1, 43, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(1, 43, 255, 0); }
+}
+
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 84, 0, 0.3);
+  border-radius: 14px;
+  background: rgba(255, 84, 0, 0.06);
+  color: var(--orange);
+}
+
+.error svg {
+  flex: none;
+  margin-top: 3px;
+}
+
+.errorTitle {
+  color: var(--dark);
+  font-weight: 500;
+}
+
+.errorCode {
+  display: block;
+  margin-top: 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.5em;
+  color: var(--dark-60);
+  word-break: break-word;
+}
+
+.statusRow {
+  min-height: 26px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 100px;
+  background: var(--secondary-10);
+  color: var(--primary);
+}
+
+.badgeOk {
+  background: rgba(11, 186, 26, 0.1);
+  color: var(--green);
+}
+
+.browserFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 28px;
+  border-top: 1px solid var(--dark-10);
+}
+
+.reset {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--dark-60);
+  cursor: pointer;
+}
+.reset:hover {
+  color: var(--dark);
+}
+
+/* Phone extras on top of OnYourPhone's frames */
+.iphone {
+  scroll-margin: 80px;
+}
+
+.thread {
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.thread::-webkit-scrollbar {
+  display: none;
+}
+
+.empty {
+  margin-top: 40%;
+  padding: 0 24px;
+  line-height: 1.45em;
+}
+
+.typing {
+  flex-direction: row;
+  gap: 4px;
+  width: auto;
+  padding: 10px 12px;
+}
+
+.typing span {
+  width: 6px;
+  height: 6px;
+  border-radius: 100px;
+  background: rgba(0, 0, 0, 0.35);
+  animation: blink 1.2s infinite ease-in-out;
+}
+.typing span:nth-child(2) { animation-delay: 0.15s; }
+.typing span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes blink {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-2px); }
+}
+
+.chips {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  align-self: stretch;
+  flex: none;
+  padding: 0 12px 4px;
+}
+
+.chip {
+  min-width: 44px;
+  padding: 6px 14px;
+  border: 1px solid rgb(11, 132, 255);
+  border-radius: 100px;
+  background: var(--white);
+  color: rgb(11, 132, 255);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.chip:hover {
+  background: rgb(11, 132, 255);
+  color: var(--white);
+}
+
+.input {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: rgb(0, 0, 0);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 1.2em;
+}
+.input::placeholder {
+  color: rgba(0, 0, 0, 0.35);
+}
+
+.send {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin-left: 6px;
+  padding: 0;
+  border: 0;
+  border-radius: 100px;
+  background: rgb(11, 132, 255);
+  cursor: pointer;
+}
+.send:disabled {
+  background: rgba(0, 0, 0, 0.15);
+  cursor: default;
+}
+
+@media (max-width: 1199.98px) {
+  .stage {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .browser {
+    flex: none;
+    width: 100%;
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 809.98px) {
+  .app {
+    padding: 20px;
+  }
+
+  .browserFooter {
+    padding: 12px 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse,
+  .typing span {
+    animation: none;
+  }
+}
