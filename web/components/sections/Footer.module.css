@@ -117,15 +117,6 @@
   border-top: 1px solid var(--white-20);
 }
 
-.legalLinks {
-  flex: none;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 24px;
-}
-
 .copyright {
   color: var(--white);
   text-align: start;

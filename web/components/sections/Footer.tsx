@@ -42,11 +42,6 @@ export function Footer() {
 
         <div className={styles.legalRail}>
           <p className={`t-body2 ${styles.copyright}`}>© 2026 Patchline. All rights reserved.</p>
-          <div className={styles.legalLinks}>
-            <a href="https://framer.link/ridham43" target="_blank" rel="noopener noreferrer" className="t-body2 link-light">
-              Created by UX Ridham
-            </a>
-          </div>
         </div>
       </div>
     </footer>

@@ -37,7 +37,7 @@ export function HowItWorks() {
             >
               <div className={styles.beam}>
                 <AnimatedBeam
-                  centerImage="/images/7QuYVNK6yeb3hmBB6mc2yJ1DBUg.png"
+                  centerImage="/images/patchline-mark.png"
                   leftNodes={[
                     { image: "/images/ghA1dv8Ec7AjGLyCNKFyk2YW2Y.png" },
                     { image: "/images/cu4MfUe9qRDMpZkhNA7m7eIhaM.png" },

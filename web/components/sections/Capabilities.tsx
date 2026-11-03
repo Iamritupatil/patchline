@@ -14,7 +14,7 @@ const BEAM_PROPS = {
   convergeX: 0.5,
   convergeY: 0.9,
   bend: 0.45,
-  meetIcon: "/images/7QuYVNK6yeb3hmBB6mc2yJ1DBUg.png",
+  meetIcon: "/images/patchline-mark.png",
   meetIconSize: 48,
   meetIconBackground: "rgb(255, 255, 255)",
   meetIconBorderColor: "rgba(0, 0, 0, 0.2)",
