@@ -1,11 +1,13 @@
 import { Hono } from 'hono'
 import { z } from 'zod'
 import { config, isProd } from '../config.js'
+import { sha256 } from '../crypto.js'
 import { TERMINAL } from '../group.js'
 import { listIncidents, mute, setStatus, type Incident, type Status } from '../incidents.js'
 import { log } from '../log.js'
 import { connectedText, incidentDetail, incidentLine } from '../messages.js'
 import { allow } from '../ratelimit.js'
+import { markSeen } from '../store.js'
 import { normalizePhone, redeemCode, tenantsForPhone, type Tenant } from '../tenants.js'
 import { verifyKeiki } from './auth.js'
 
@@ -45,8 +47,10 @@ const ownerTools: Record<string, OwnerTool> = {
     return inc ? { ok: true, message: incidentDetail(inc, tz) } : { ok: false, message: 'No matching incident.' }
   },
 
+  // State changes need an explicit #id: no "latest" fallback an injected alert could steer the agent into.
   async ignore(input, owner) {
     const { id } = IncidentRef.parse(input)
+    if (!id) return { ok: false, message: 'Which one? Reply "ignore #12" with the incident number.' }
     const inc = await resolveIncident(owner, id, OPEN)
     if (!inc) return { ok: false, message: 'No open incident to ignore.' }
     if (TERMINAL.has(inc.status)) return { ok: true, message: `#${inc.id} is already ${inc.status}.` }
@@ -99,6 +103,10 @@ keikiTools.post('/:name', async (c) => {
 
   if (config.KEIKI_WEBHOOK_SECRET) {
     if (!verifyKeiki(header, raw, config.KEIKI_WEBHOOK_SECRET)) return c.json({ ok: false, message: 'bad signature' }, 401)
+    // A signed call is good for 5 minutes, so remember it: a captured call can't be replayed. Keyed per tool because
+    // the signature doesn't cover the path, and the agent may call two tools with the same body in one turn.
+    const sig = header('x-keiki-signature') ?? header('keiki-signature') ?? ''
+    if (!(await markSeen(`keiki:${c.req.param('name')}:${sha256(sig)}`))) return c.json({ ok: false, message: 'duplicate' }, 409)
   } else if (isProd) {
     return c.json({ ok: false, message: 'not configured' }, 503)
   }

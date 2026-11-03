@@ -34,7 +34,8 @@ const formatPhone = (n: string) => n.replace(/^\+1(\d{3})(\d{3})(\d{4})$/, "+1 (
 /** Refresh whichever code has expired (phone codes and claim codes are short-lived). */
 async function refreshExpired(s: Signup): Promise<Signup> {
   const now = Date.now()
-  const phone = s.phone.expiresAt <= now ? await newPhoneCode(s.sessionToken) : s.phone
+  // The server refuses new phone codes once a phone is linked (409); keep the old one, the step is done anyway.
+  const phone = s.phone.expiresAt <= now ? await newPhoneCode(s.sessionToken).catch(() => s.phone) : s.phone
   const connect = s.connect.expiresAt <= now ? await newPrompt(s.sessionToken) : s.connect
   return { ...s, phone, connect }
 }

@@ -1,7 +1,7 @@
 import { Hono } from 'hono'
 import { errMsg, log } from '../log.js'
 import { enqueue } from '../pipeline.js'
-import { allow } from '../ratelimit.js'
+import { allow, clientIp } from '../ratelimit.js'
 import { origins, tenantByIngestKey } from '../tenants.js'
 import { parseGeneric } from './generic.js'
 import { SnsMessage, confirmSubscription, parseSnsNotification, verifySns } from './sns.js'
@@ -24,12 +24,14 @@ ingest.options('/:key', async (c) => {
 })
 
 ingest.post('/:key', async (c) => {
-  const key = c.req.param('key')
-  if (!allow(`ingest:${key}`, 120, 60_000)) return c.json({ error: 'rate_limited' }, 429)
+  // Limit by IP first, then by tenant. Keying on the raw URL key would let random keys flood the limiter.
+  if (!allow(`ingest-ip:${clientIp((n) => c.req.header(n))}`, 600, 60_000)) return c.json({ error: 'rate_limited' }, 429)
 
-  const found = await tenantByIngestKey(key)
+  const found = await tenantByIngestKey(c.req.param('key'))
   if (!found) return c.json({ error: 'unknown_key' }, 404)
   const { tenant, kind } = found
+  // The public key ships in a browser bundle, so it gets a tighter budget than the secret server key.
+  if (!allow(`ingest:${tenant.id}:${kind}`, kind === 'public' ? 30 : 120, 60_000)) return c.json({ error: 'rate_limited' }, 429)
 
   if (kind === 'public') {
     const origin = c.req.header('origin')

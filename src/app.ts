@@ -1,4 +1,5 @@
 import { Hono } from 'hono'
+import { bodyLimit } from 'hono/body-limit'
 import { api } from './api.js'
 import { config } from './config.js'
 import { safeEqual } from './crypto.js'
@@ -8,6 +9,12 @@ import { errMsg, log } from './log.js'
 import { skill } from './skill.js'
 
 export const app = new Hono()
+
+// Cap bodies before anything reads them (the Keiki route reads the body before its signature check).
+const limit = (kb: number) => bodyLimit({ maxSize: kb * 1024, onError: (c) => c.json({ error: 'too_large' }, 413) })
+app.use('/ingest/*', limit(256))
+app.use('/keiki/tools/*', limit(64))
+app.use('/api/*', limit(64))
 
 app.get('/health', (c) => c.json({ ok: true }))
 
